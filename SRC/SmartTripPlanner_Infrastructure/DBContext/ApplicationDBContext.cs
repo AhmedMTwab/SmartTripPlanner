@@ -12,7 +12,6 @@ public class ApplicationDBContext:DbContext
     public DbSet<Trip> Trips { get; set; }
     public DbSet<Event> Events { get; set; }
     public DbSet<Location> Locations { get; set; }
-    public DbSet<LocationTypes> LocationTypes { get; set; }
     public DbSet<Hotel> Hotels { get; set; }
     public DbSet<Restaurant> Restaurants { get; set; }
     public DbSet<Meuseum> Meuseums { get; set; }

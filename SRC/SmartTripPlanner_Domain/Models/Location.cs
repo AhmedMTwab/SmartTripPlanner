@@ -12,8 +12,5 @@ public class Location
     public double Latitude { get; set; }
     public double Longitude { get; set; }
     public string? BookingUrl { get; set; }
-    public int LocationTypeId { get; set; }
-    [ForeignKey("LocationTypeId")]
-    public virtual LocationTypes LocationType { get; set; } = new LocationTypes();
     public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 }
