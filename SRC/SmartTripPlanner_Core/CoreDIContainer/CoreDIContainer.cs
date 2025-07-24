@@ -9,5 +9,7 @@ public static class CoreDIContainer
     public static void AddCoreServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<ISignUpService, SignUpService>();
+        services.AddScoped<ISignInService, SignInService>();
+
     }
 }

@@ -1,5 +1,9 @@
+using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using SmartTripPlanner_Infrastructure.InfrastructureDIContainer;
 namespace SmartTripPlanner_API
 {
@@ -18,9 +22,30 @@ namespace SmartTripPlanner_API
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddCoreServices(builder.Configuration);
             builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(
-
+                options =>
+                {
+                    options.Lockout.MaxFailedAccessAttempts = 3;
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                }
             )
             .AddEntityFrameworkStores<ApplicationDBContext>();
+            string securityKey = builder.Configuration.GetSection("SecurityKey").Value;
+            byte[] keyBytes = ASCIIEncoding.ASCII.GetBytes(securityKey);
+            var key = new SymmetricSecurityKey(keyBytes);
+            builder.Services.AddAuthentication(
+                options =>
+                {
+                    options.DefaultAuthenticateScheme = "default";
+                    options.DefaultChallengeScheme = "default";
+                }
+                )
+            .AddJwtBearer("default", options =>
+            options.TokenValidationParameters=new TokenValidationParameters{
+                IssuerSigningKey=key,
+                ValidateIssuer=true,
+                ValidateAudience=true
+            }
+            );
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -32,6 +57,7 @@ namespace SmartTripPlanner_API
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
