@@ -7,4 +7,7 @@
 6. 	    As a user, I want to click a "Book Now" button on a location's detail page so that I am official reservation page or a partner service to book  (e.g., Booking.com, Expedia) to securely complete my reservation.
 
 ### EERD
+
 ![EERD](./Trip_Managment_ERD.png)
+
+### Routes

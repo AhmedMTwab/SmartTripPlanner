@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using SmartTripPlanner_Infrastructure.InfrastructureDIContainer;
 namespace SmartTripPlanner_API
 {
@@ -14,6 +16,11 @@ namespace SmartTripPlanner_API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddInfrastructureServices(builder.Configuration);
+            builder.Services.AddCoreServices(builder.Configuration);
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(
+
+            )
+            .AddEntityFrameworkStores<ApplicationDBContext>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

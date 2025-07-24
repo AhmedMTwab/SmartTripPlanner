@@ -1,9 +1,11 @@
 using System;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SmartTripPlanner_Domain.Models.LocationType;
 
 
-public class ApplicationDBContext:DbContext
+public class ApplicationDBContext:IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 {
     public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options)
         : base(options)
@@ -22,6 +24,13 @@ public class ApplicationDBContext:DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Location>()
+            .HasDiscriminator<string>("LocationType")
+            .HasValue<Hotel>("Hotel")
+            .HasValue<Restaurant>("Restaurant")
+            .HasValue<Meuseum>("Meuseum")
+            .HasValue<Cinema>("Cinema")
+            .HasValue<FilmLocation>("FilmLocation");
         base.OnModelCreating(modelBuilder);
     }
 }

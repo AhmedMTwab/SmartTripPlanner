@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../SmartTripPlanner_Core/SmartTripPlanner_Core.csproj" />
     <ProjectReference Include="../SmartTripPlanner_Infrastructure/SmartTripPlanner_Infrastructure.csproj" />
   </ItemGroup>
 

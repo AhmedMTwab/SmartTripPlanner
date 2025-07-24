@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../SmartTripPlanner_Domain/SmartTripPlanner_Domain.csproj" />
+  </ItemGroup>
+
 </Project>
