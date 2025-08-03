@@ -9,7 +9,7 @@ namespace SmartTripPlanner_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticationController(UserManager<ApplicationUser> _userManager, ISignUpService _signUpService,ISignInService _signInService) : ControllerBase
+    public class AuthenticationController(UserManager<ApplicationUser> _userManager, ISignUpService _signUpService, ISignInService _signInService,IDeleteAccountService _deleteAccountService) : ControllerBase
     {
         [HttpPost("SignUp")]
         public async Task<ActionResult> SignUp(SignUpDTO signUpDTO)
@@ -54,11 +54,20 @@ namespace SmartTripPlanner_API.Controllers
                     await _userManager.AccessFailedAsync(user);
                     return Unauthorized("Wrong Password");
                 }
-                var token=await _signInService.SignInAsync(user);
+                var token = await _signInService.SignInAsync(user);
                 return Ok(token);
             }
             else
                 return BadRequest("Wrong UserName");
+        }
+        [HttpDelete]
+        public async Task<ActionResult> DeleteAccount(string AccountID)
+        {
+            var result = await _deleteAccountService.DeleteAccountAsync(AccountID);
+            if (result)
+                return Ok("Account Deleted");
+
+            return NotFound("Account NotFound");
         }
     }
 }

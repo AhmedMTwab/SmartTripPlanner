@@ -29,6 +29,7 @@ namespace SmartTripPlanner_API
                 }
             )
             .AddEntityFrameworkStores<ApplicationDBContext>();
+            //JWT Authentication
             string securityKey = builder.Configuration.GetSection("SecurityKey").Value;
             byte[] keyBytes = ASCIIEncoding.ASCII.GetBytes(securityKey);
             var key = new SymmetricSecurityKey(keyBytes);
